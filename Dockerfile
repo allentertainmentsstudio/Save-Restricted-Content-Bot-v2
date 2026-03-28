@@ -1,11 +1,20 @@
 FROM python:3.10.4-slim-buster
 
-# Set non-interactive mode to avoid prompts
+# Avoid interactive prompts
 ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Etc/UTC
 
-# Update & upgrade safely, clean cache to reduce image size
-RUN apt-get update && \
-    apt-get upgrade -y --no-install-recommends && \
+# Update package lists & install essentials safely
+RUN apt-get update -y && \
+    apt-get install -y --no-install-recommends \
+        apt-transport-https \
+        ca-certificates \
+        gnupg \
+        lsb-release \
+        software-properties-common && \
+    # Add backports for ffmpeg
+    echo "deb http://deb.debian.org/debian buster-backports main" > /etc/apt/sources.list.d/backports.list && \
+    apt-get update -y && \
     apt-get install -y --no-install-recommends \
         git \
         curl \
@@ -13,15 +22,15 @@ RUN apt-get update && \
         python3-pip \
         bash \
         neofetch \
-        ffmpeg \
-        software-properties-common && \
+        ffmpeg && \
+    # Clean cache to reduce image size
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Copy requirements first for better caching
+# Copy Python requirements first for caching
 COPY requirements.txt .
 
-# Install Python packages
+# Upgrade pip & install Python packages
 RUN pip3 install --upgrade pip wheel setuptools && \
     pip3 install --no-cache-dir -r requirements.txt
 
@@ -32,5 +41,5 @@ COPY . .
 # Expose port
 EXPOSE 8000
 
-# Run both Flask and your script
+# Run Flask and your script
 CMD flask run -h 0.0.0.0 -p 8000 & python3 -m devgagan
