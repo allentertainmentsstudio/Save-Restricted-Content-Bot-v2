@@ -42,10 +42,10 @@ async def devggn_boot():
                 and uploading them back to Telegram.
 👨‍💻 Author: Gagan
 🌐 GitHub: https://github.com/devgaganin/
-📬 Telegram: https://t.me/team_spy_pro
-▶️ YouTube: https://youtube.com/@dev_gagan
+📬 Telegram: https://t.me/anujedits76
+▶️ YouTube: https://youtube.com/@araftahindidubbedep?si=bEkFafjkg-XUShtm
 🗓️ Created: 2025-01-11
-🔄 Last Modified: 2025-01-11
+🔄 Last Modified: 2026-01-11
 🛠️ Version: 2.0.5
 📜 License: MIT License
 ---------------------------------------------------
